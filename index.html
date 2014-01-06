@@ -102,6 +102,19 @@
 // get the browser specific transitionEnd event name (https://gist.github.com/O-Zone/7230245)
 (function(c){var d={MozTransition:"transitionend",WebkitTransition:"webkitTransitionEnd",transition:"transitionEnd",MSTransition:"msTransitionEnd",OTransition:"oTransitionEnd"},b=c.document.createElement("div");for(var a in d){if(b.style[a]!==undefined){c.transitionEnd=d[a];break}}})(window);
 
+function setClassFromArray(elem, arr) {
+    switch (tmpClasses.length) {
+    case 0 :
+        elem.className = null;
+        break;
+    case 1 :
+        elem.className = tmpClasses[0];
+        breaḱ;
+    default:
+        elem.className = tmpClasses.join(' ');
+    }
+}
+
 function setClass(elem, className, reset) {
     var index = -1;
         tmpClasses = elem.className === '' ? [] : elem.className.split(' ');
@@ -114,12 +127,12 @@ function setClass(elem, className, reset) {
     if (reset) {
         if (index >= 0) {
             tmpClasses.splice(index, 1);
-            elem.className = tmpClasses.length > 1 ? tmpClasses.join(' ') : tmpClasses[0] || '';
+            setClassFromArray(elem, tmpClasses);
         }
     } else {
         if (index === -1) {
             tmpClasses.push(className);
-            elem.className = tmpClasses.length > 1 ? tmpClasses.join(' ') : tmpClasses[0] || '';
+            setClassFromArray(elem, tmpClasses);
         }
     }
 }
