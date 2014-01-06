@@ -57,7 +57,11 @@
         }
         .modalContainer.fade{
             opacity:0;
+            //-webkit-transition:opacity 15s linear;
+            //transition:opacity 15s linear;
             -webkit-transition:opacity .15s linear;
+            -moz-transition:opacity .15s linear;
+            -o-transition:opacity .15s linear;
             transition:opacity .15s linear;
         }
         .modalContainer.shown{
@@ -81,10 +85,10 @@
             -webkit-transform:translate(0, -25%);
             -ms-transform:translate(0, -25%);
             transform:translate(0, -25%);
-            -webkit-transition:transform 0.3s ease-out;
-            -moz-transition:transform 0.3s ease-out;
-            -o-transition:transform 0.3s ease-out;
-            transition:transform 0.3s ease-out;
+            -webkit-transition:transform .3s ease-out;
+            -moz-transition:transform .3s ease-out;
+            -o-transition:transform .3s ease-out;
+            transition:transform .3s ease-out;
         }
         .modalContainer.shown .modalDialog{
             -webkit-transform: translate(0,0);
@@ -190,7 +194,7 @@ function setClass(elem, className, reset) {
             setClass(document.body, 'modalOpen', true);
             setClass(modalOverlay, 'shown', true);
             //modalOverlay.style.display = 'none';
-            modalOuterContainer.style.display = 'none';
+            //modalOuterContainer.style.display = 'none';
             setClass(modalContainer, 'shown', true);
         };
         closeButton.addEventListener('click', closeModalFn);
