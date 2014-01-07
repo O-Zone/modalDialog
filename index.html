@@ -204,10 +204,11 @@ function setClass(elem, className, reset) {
             modalOverlay.style.display = 'block';
             modalOuterContainer.style.display = 'block';
             modalContainer.style.display = 'block';
-            setClass(modalOverlay, 'shown');
-            //modalOverlay.style.display = 'block';
-            setClass(modalContainer, 'shown');
-            setClass(modalOverlay, 'shown');
+            setTimeout(function () {
+                setClass(modalOverlay, 'shown');
+                setClass(modalContainer, 'shown');
+                setClass(modalOverlay, 'shown');
+            }, 0);
         })
     </script>
 </body>
