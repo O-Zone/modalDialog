@@ -31,13 +31,18 @@
             top: 0;
             left: 0;
             background-color: #000;
+        }
+        .modalOverlay.fade{
             opacity: 0;
+            -webkit-transition: opacity .15s linear;
+            -moz-transition: opacity .15s linear;
+            -o-transition: opacity .15s linear;
             transition: opacity .15s linear;
-            filter:alpha(opacity=80); /* IE8 */
+            filter:alpha(opacity=0); /* IE8 */
         }
         .modalOverlay.shown{
-            display: block;
             opacity: .8;
+            filter:alpha(opacity=80); /* IE8 */
         }
         .modalOuterContainer{
             position:fixed;
@@ -63,13 +68,10 @@
             -moz-transition:opacity .15s linear;
             -o-transition:opacity .15s linear;
             transition:opacity .15s linear;
+            filter:alpha(opacity=0); /* IE8 */
         }
         .modalContainer.shown{
             opacity:1;
-            -webkit-transition:opacity .15s linear;
-            -moz-transition:opacity .15s linear;
-            -o-transition:opacity .15s linear;
-            transition:opacity .15s linear;
         }
         .modalDialog{
             position:relative;
@@ -85,19 +87,15 @@
             -webkit-transform:translate(0, -25%);
             -ms-transform:translate(0, -25%);
             transform:translate(0, -25%);
-            -webkit-transition:transform .3s ease-out;
-            -moz-transition:transform .3s ease-out;
-            -o-transition:transform .3s ease-out;
+            -webkit-transition:-webkit-transform .3s ease-out;
+            -moz-transition:-moz-transform .3s ease-out;
+            -o-transition:-o-transform .3s ease-out;
             transition:transform .3s ease-out;
         }
         .modalContainer.shown .modalDialog{
             -webkit-transform: translate(0,0);
             -ms-transform: translate(0,0);
             transform: translate(0,0);
-            -webkit-transition:-webkit-transform .3s ease-out;
-            -moz-transition:-moz-transform .3s ease-out;
-            -o-transition:-o-transform .3s ease-out;
-            transition:transform .3s ease-out;
         }
         @media screen and (min-width: 768px) {
             .modalDialog{
@@ -174,7 +172,7 @@ function setClass(elem, className, reset) {
             </div>
         </div>
     </div>
-    <div class="modalOverlay"></div>
+    <div class="modalOverlay fade"></div>
     <script type="text/javascript">
         var closeButton = document.getElementsByClassName('closeButton')[0];
         var turnOnModal = document.getElementsByClassName('turnOnModal')[0];
@@ -187,6 +185,7 @@ function setClass(elem, className, reset) {
                 if (modalContainer.className.indexOf('shown') < 0) {
                     modalContainer.style.display = 'none';
                     modalOuterContainer.style.display = 'none';
+                    modalOverlay.style.display = 'none';
                 }
             }
         });
@@ -204,11 +203,13 @@ function setClass(elem, className, reset) {
         });
         turnOnModal.addEventListener('click', function(e){
             setClass(document.body, 'modalOpen');
+            modalOverlay.style.display = 'block';
+            modalOuterContainer.style.display = 'block';
+            modalContainer.style.display = 'block';
             setClass(modalOverlay, 'shown');
             //modalOverlay.style.display = 'block';
-            modalOuterContainer.style.display = 'block';
             setClass(modalContainer, 'shown');
-            modalContainer.style.display = 'block';
+            setClass(modalOverlay, 'shown');
         })
     </script>
 </body>
