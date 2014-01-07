@@ -192,8 +192,6 @@ function setClass(elem, className, reset) {
         var closeModalFn = function(e){
             setClass(document.body, 'modalOpen', true);
             setClass(modalOverlay, 'shown', true);
-            //modalOverlay.style.display = 'none';
-            //modalOuterContainer.style.display = 'none';
             setClass(modalContainer, 'shown', true);
         };
         closeButton.addEventListener('click', closeModalFn);
