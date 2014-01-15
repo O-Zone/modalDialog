@@ -1,0 +1,112 @@
+body{
+    background-color:#ccc;
+}
+@media (max-width: 767px) {
+    .dkKbModalDialog{
+        width: auto;
+        margin: 5px;
+    }
+}
+@media (min-width: 768px) {
+    .dkKbModalDialog{
+        width: 600px;
+        margin: 30px auto;
+    }
+}
+.dkKbModalOpen{
+    overflow:hidden;
+}
+.dkKbModalOverlay{
+    position: fixed;
+    z-index: 9000;
+    display:none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #000;
+}
+.dkKbModalOverlay.dkKbFade{
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -moz-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+    filter:alpha(opacity=0); /* IE8 */
+}
+.dkKbModalOverlay.dkKbShown{
+    opacity: .8;
+    filter:alpha(opacity=80); /* IE8 */
+}
+.dkKbModalOuterContainer{
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:9010;
+    overflow:auto;
+    display:none;
+}
+.dkKbModalContainer{
+    box-sizing:border-box;
+}
+.dkKbModalContainer .dkKbModalDialog{
+    z-index:9900;
+}
+.dkKbModalContainer.dkKbFade{
+    opacity:0;
+    //-webkit-transition:opacity 15s linear;
+    //transition:opacity 15s linear;
+    -webkit-transition:opacity .15s linear;
+    -moz-transition:opacity .15s linear;
+    -o-transition:opacity .15s linear;
+    transition:opacity .15s linear;
+    filter:alpha(opacity=0); /* IE8 */
+}
+.dkKbModalContainer.dkKbShown{
+    opacity:1;
+}
+.dkKbModalDialog{
+    position:relative;
+    background-color:#eee;
+    border:1px solid #000;
+    border-radius: 5px;
+    padding:10px;
+}
+.dkKbModalDialogBody{
+    overflow:auto;
+}
+.dkKbModalContainer.dkKbFade .dkKbModalDialog{
+    -webkit-transform:translate(0, -25%);
+    -ms-transform:translate(0, -25%);
+    transform:translate(0, -25%);
+    -webkit-transition:-webkit-transform .3s ease-out;
+    -moz-transition:-moz-transform .3s ease-out;
+    -o-transition:-o-transform .3s ease-out;
+    transition:transform .3s ease-out;
+}
+.dkKbModalContainer.dkKbShown .dkKbModalDialog{
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    transform: translate(0,0);
+}
+@media screen and (min-width: 768px) {
+    .dkKbModalDialog{
+        width:600px;
+        margin: 30px auto;
+    }
+}
+.dkKbCloseButton{
+    float:right;
+    margin:10px;
+    cursor:pointer;
+    -webkit-appearance:none;
+    border:0;
+    margin-top:-2px;
+    color:#000;
+    opacity:.5;
+    filter:alpha(opacity:50);
+    background:transparent;
+    font-weight:bold;
+}
