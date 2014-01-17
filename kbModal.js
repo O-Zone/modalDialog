@@ -1,11 +1,11 @@
 /*global console*/
 // get the browser specific transitionEnd event name (https://gist.github.com/O-Zone/7230245)
-(function(c){var d={MozTransition:"transitionend",WebkitTransition:"webkitTransitionEnd",transition:"transitionEnd",MSTransition:"msTransitionEnd",OTransition:"oTransitionEnd"},b=c.document.createElement("div");for(var a in d){if(b.style[a]!==undefined){c.transitionEnd=d[a];break}}})(window);
+//(function(c){var d={MozTransition:"transitionend",WebkitTransition:"webkitTransitionEnd",transition:"transitionEnd",MSTransition:"msTransitionEnd",OTransition:"oTransitionEnd"},b=c.document.createElement("div");for(var a in d){if(b.style[a]!==undefined){c.transitionEnd=d[a];break}}})(window);
 
 (function (window, document) {
     // miliseconds before removing the modal dialog in browsers that don't support transitionEnd event
     // Let this be a bit more than the slowest transition in the css file (probably the .dkKbModalDialog)
-    var MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL = 500;
+    var MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL = 350;
 
     // --- helper functions ---
     // DeleteAfterUse For testing purposes only!
