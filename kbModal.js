@@ -82,6 +82,25 @@
         }
     }
 
+    // emulateTransitionEnd
+/*    function getTransitionEndEmulatedFunction(elem, duration, cb) {
+        var called = false,
+            callback = function () {
+                if (!called) {
+                    cb();
+                } else {
+                    called = false;
+                }
+            };
+        addEvent(elem, window.transitionEnd, function () {
+            called = true;
+            cb();
+        });
+        return function () {
+            setTimeout(callback, duration + 50); // we want this function to appear after a tad after real transitionEnd events
+        };
+    }
+*/
     function setClassFromArray(elem, allClasses) {
         switch (allClasses.length) {
         case 0 :
