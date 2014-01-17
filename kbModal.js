@@ -1,6 +1,4 @@
 /*global console*/
-// get the browser specific transitionEnd event name (https://gist.github.com/O-Zone/7230245)
-//(function(c){var d={MozTransition:"transitionend",WebkitTransition:"webkitTransitionEnd",transition:"transitionEnd",MSTransition:"msTransitionEnd",OTransition:"oTransitionEnd"},b=c.document.createElement("div");for(var a in d){if(b.style[a]!==undefined){c.transitionEnd=d[a];break}}})(window);
 
 (function (window, document) {
     // miliseconds before removing the modal dialog in browsers that don't support transitionEnd event
@@ -53,6 +51,7 @@
 
     // crossbrowser addEventListener function (from http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser)
     function addEvent(elem, event, fn) {
+log('Adding event "' + event + '" on elem "' + elem.className + '"');
         // avoid memory overhead of new anonymous functions for every event handler that's installed
         // by using local functions
         function listenHandler(e) {
@@ -82,25 +81,6 @@
         }
     }
 
-    // emulateTransitionEnd
-/*    function getTransitionEndEmulatedFunction(elem, duration, cb) {
-        var called = false,
-            callback = function () {
-                if (!called) {
-                    cb();
-                } else {
-                    called = false;
-                }
-            };
-        addEvent(elem, window.transitionEnd, function () {
-            called = true;
-            cb();
-        });
-        return function () {
-            setTimeout(callback, duration + 50); // we want this function to appear after a tad after real transitionEnd events
-        };
-    }
-*/
     function setClassFromArray(elem, allClasses) {
         switch (allClasses.length) {
         case 0 :
@@ -197,29 +177,15 @@
                     setClass(document.body, 'dkKbModalOpen', true);
                     setClass(modalOverlay, 'dkKbShown', true);
                     setClass(modalContainer, 'dkKbShown', true);
-                    if (!window.transitionEnd) {
-                        // this browser does not support transitionEnd event - wait a bit to turn off dkKbModalOuterContainer and dkKbModalOverlay
-                        window.setTimeout(function () {
-                            modalContainer.style.display = 'none';
-                            modalOuterContainer.style.display = 'none';
-                            modalOverlay.style.display = 'none';
-                        }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
-                    }
+                    window.setTimeout(function () {
+                        modalContainer.style.display = 'none';
+                        modalOuterContainer.style.display = 'none';
+                        modalOverlay.style.display = 'none';
+                    }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
                 }
             };
 
             // --- setting up eventhandlers ---
-            if (window.transitionEnd) {
-                addEvent(modalContainer, window.transitionEnd, function(e){
-                    if (e.propertyName === 'opacity') {
-                        if (modalContainer.className.indexOf('dkKbShown') < 0) {
-                            modalContainer.style.display = 'none';
-                            modalOuterContainer.style.display = 'none';
-                            modalOverlay.style.display = 'none';
-                        }
-                    }
-                });
-            } // NOTE: If browser does not support transitionEnd event it will just wait a bit and close the modal layers from the 
             addEvent(closeButton, 'click', window.dkKbModal.hide);
             addEvent(modalOuterContainer, 'click', window.dkKbModal.hide);
             addEvent(modalDialog, 'click', function (e) {
