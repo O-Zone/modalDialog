@@ -172,7 +172,7 @@
                         setClass(modalOverlay, 'dkKbShown');
                         setClass(modalContainer, 'dkKbShown');
                         setClass(modalOverlay, 'dkKbShown');
-                    }, 0);
+                    }, 20); // NOTE: 0 ought to be enough to put this back in the execution queue, but FF seems to have some issue with that? :/
                 },
                 hide : function () {
                     setClass(document.body, 'dkKbModalOpen', true);
