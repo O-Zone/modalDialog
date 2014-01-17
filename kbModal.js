@@ -124,7 +124,7 @@
             // --- setting up the modalDialog elements ---
             var modalOuterContainer = document.createElement('div');
             modalOuterContainer.className = 'dkKbModalOuterContainer';
-            modalOuterContainer.innerHTML = '<div class="dkKbModalContainer dkKbModal dkKbFade dkKbShown">' +
+            modalOuterContainer.innerHTML = '<div class="dkKbModalContainer dkKbModal dkKbFade">' +
                 '<div class="dkKbModalDialog">' +
                     '<div class="dkKbModalDialogHeader">' +
                         '<button class="dkKbCloseButton">&times;</button>' +
