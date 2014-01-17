@@ -1,15 +1,15 @@
 body{
     background-color:#ccc;
 }
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
     .dkKbModalDialog{
         width: auto;
         margin: 5px;
     }
 }
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
     .dkKbModalDialog{
-        width: 600px;
+        width: 744px;
         margin: 30px auto;
     }
 }
@@ -28,10 +28,10 @@ body{
 }
 .dkKbModalOverlay.dkKbFade{
     opacity: 0;
-    -webkit-transition: opacity .15s linear;
-    -moz-transition: opacity .15s linear;
-    -o-transition: opacity .15s linear;
-    transition: opacity .15s linear;
+    -webkit-transition: opacity 150ms linear;
+    -moz-transition: opacity 150ms linear;
+    -o-transition: opacity 150ms linear;
+    transition: opacity 150ms linear;
     filter:alpha(opacity=0); /* IE8 */
 }
 .dkKbModalOverlay.dkKbShown{
@@ -56,12 +56,10 @@ body{
 }
 .dkKbModalContainer.dkKbFade{
     opacity:0;
-    //-webkit-transition:opacity 15s linear;
-    //transition:opacity 15s linear;
-    -webkit-transition:opacity .15s linear;
-    -moz-transition:opacity .15s linear;
-    -o-transition:opacity .15s linear;
-    transition:opacity .15s linear;
+    -webkit-transition:opacity 150ms linear;
+    -moz-transition:opacity 150ms linear;
+    -o-transition:opacity 150ms linear;
+    transition:opacity 150ms linear;
     filter:alpha(opacity=0); /* IE8 */
 }
 .dkKbModalContainer.dkKbShown{
@@ -84,21 +82,15 @@ body{
     -webkit-transform:translate(0, -25%);
     -ms-transform:translate(0, -25%);
     transform:translate(0, -25%);
-    -webkit-transition:-webkit-transform .3s ease-out;
-    -moz-transition:-moz-transform .3s ease-out;
-    -o-transition:-o-transform .3s ease-out;
-    transition:transform .3s ease-out;
+    -webkit-transition:-webkit-transform 300ms ease-out;
+    -moz-transition:-moz-transform 300ms ease-out;
+    -o-transition:-o-transform 300ms ease-out;
+    transition:transform 300ms ease-out;
 }
 .dkKbModalContainer.dkKbShown .dkKbModalDialog{
     -webkit-transform: translate(0,0);
     -ms-transform: translate(0,0);
     transform: translate(0,0);
-}
-@media screen and (min-width: 768px) {
-    .dkKbModalDialog{
-        width:600px;
-        margin: 30px auto;
-    }
 }
 .dkKbCloseButton{
     float:right;
