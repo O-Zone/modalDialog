@@ -118,6 +118,54 @@
         }
     }
 
+    function animStep(config) {
+        if (!config.stepLeft && config.cb) {
+            config.cb.call(config.that);
+        } else {
+            var i,
+                topValue = config.top.shift(),
+                opacityValue = config.opacity.shift();
+            for (i = 0; i < config.topElems.length; i += 1) {
+                config.topElems[i].style.top = topValue;
+            }
+            for (i = 0; i < config.opacityElems.length; i += 1) {
+                config.opacityElems[i].style.opacity = opacityValue;
+                config.opacityElems[i].style.filter = 'alpha(opacity=' + 100 * opacityValue + ')'; // lex IE8
+            }
+            config.stepLeft -= 1;
+            setTimeout(function () {
+                animStep(config);
+            }, config.stepTime);
+        }
+    }
+
+    // Method for animating the modal dialog in browsers that do not support CSS3 transitions (IE8 + IE9)
+    function animateModal(show, config, cb) {
+        if (show) {
+            //show modalDialog
+            animStep({
+                stepLeft : 6,
+                stepTime : 40,
+                topElems : config.topElems,
+                opacityElems : config.opacityElems,
+                top : ['-25%','-23%','-18%','-11%','1%','10%'],
+                opacity : ['0','.2','.4','.6','.8','1'],
+                cb : cb
+            });
+        } else {
+            // hide modalDialog
+            animStep({
+                stepLeft : 6,
+                stepTime : 40,
+                topElems : config.topElems,
+                opacityElems : config.opacityElems,
+                top : ['10%','1%','-11%','-18%','-23%','-25%'],
+                opacity : ['1','.8','.6','.4','.2','0'],
+                cb : cb
+            });
+        }
+    }
+
     // wait for DOM ready
     addEvent(document, 'readystatechange', function () {
         if (document.readyState === "complete") {
@@ -167,25 +215,58 @@
                     }
 
                     // turn on the modal dialog
-                    setClass(document.body, 'dkKbModalOpen');
-                    modalOverlay.style.display = 'block';
-                    modalOuterContainer.style.display = 'block';
-                    modalContainer.style.display = 'block';
-                    setTimeout(function () {
-                        setClass(modalOverlay, 'dkKbShown');
-                        setClass(modalContainer, 'dkKbShown');
-                        setClass(modalOverlay, 'dkKbShown');
-                    }, 20); // NOTE: 0 ought to be enough to put this back in the execution queue, but FF seems to have some issue with that? :/
+                    if (!window.transitionEnd) {
+                        // IE8 + 9 Do transition by hand
+                        animateModal(true, {
+                            topElems: [modalDialog],
+                            opacityElems: [modalContainer] // modalOverlay, // NOTE: modalOverlay can't be in here, since it shall not go to opacity 1 :(
+                        }, function () {
+                            setClass(document.body, 'dkKbModalOpen');
+                            modalOverlay.style.display = 'block';
+                            modalOuterContainer.style.display = 'block';
+                            modalContainer.style.display = 'block';
+                            setTimeout(function () {
+                                setClass(modalOverlay, 'dkKbShown');
+                                setClass(modalContainer, 'dkKbShown');
+                            }, 20); // NOTE: 0 ought to be enough to put this back in the execution queue, but FF seems to have some issue with that? :/
+                        });
+                    } else {
+                        setClass(document.body, 'dkKbModalOpen');
+                        modalOverlay.style.display = 'block';
+                        modalOuterContainer.style.display = 'block';
+                        modalContainer.style.display = 'block';
+                        setTimeout(function () {
+                            setClass(modalOverlay, 'dkKbShown');
+                            setClass(modalContainer, 'dkKbShown');
+                        }, 20); // NOTE: 0 ought to be enough to put this back in the execution queue, but FF seems to have some issue with that? :/
+                    }
                 },
                 hide : function () {
-                    setClass(document.body, 'dkKbModalOpen', true);
-                    setClass(modalOverlay, 'dkKbShown', true);
-                    setClass(modalContainer, 'dkKbShown', true);
-                    window.setTimeout(function () {
-                        modalContainer.style.display = 'none';
-                        modalOuterContainer.style.display = 'none';
-                        modalOverlay.style.display = 'none';
-                    }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
+                    if (!window.transitionEnd) {
+                        // IE8 + 9 Do transition by hand
+                        animateModal(false, {
+                            topElems: [modalDialog],
+                            opacityElems: [modalContainer] // modalOverlay, // NOTE: modalOverlay can't be in here, since it shall not go to opacity 1 :(
+                        }, function () {
+                            setClass(document.body, 'dkKbModalOpen', true);
+                            setClass(modalOverlay, 'dkKbShown', true);
+                            setClass(modalContainer, 'dkKbShown', true);
+                            window.setTimeout(function () {
+                                modalContainer.style.display = 'none';
+                                modalOuterContainer.style.display = 'none';
+                                modalOverlay.style.display = 'none';
+                            }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
+                        });
+                    } else {
+                        setClass(document.body, 'dkKbModalOpen', true);
+                        setClass(modalOverlay, 'dkKbShown', true);
+                        setClass(modalContainer, 'dkKbShown', true);
+                        window.setTimeout(function () {
+                            modalContainer.style.display = 'none';
+                            modalOuterContainer.style.display = 'none';
+                            modalOverlay.style.display = 'none';
+                        }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
+                    }
                 }
             };
 
