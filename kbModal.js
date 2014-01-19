@@ -214,23 +214,7 @@
                         }
                     }
 
-                    // turn on the modal dialog
-                    if (!window.transitionEnd) {
-                        // IE8 + 9 Do transition by hand
-                        animateModal(true, {
-                            topElems: [modalDialog],
-                            opacityElems: [modalContainer] // modalOverlay, // NOTE: modalOverlay can't be in here, since it shall not go to opacity 1 :(
-                        }, function () {
-                            setClass(document.body, 'dkKbModalOpen');
-                            modalOverlay.style.display = 'block';
-                            modalOuterContainer.style.display = 'block';
-                            modalContainer.style.display = 'block';
-                            setTimeout(function () {
-                                setClass(modalOverlay, 'dkKbShown');
-                                setClass(modalContainer, 'dkKbShown');
-                            }, 20); // NOTE: 0 ought to be enough to put this back in the execution queue, but FF seems to have some issue with that? :/
-                        });
-                    } else {
+                    function addClasses() {
                         setClass(document.body, 'dkKbModalOpen');
                         modalOverlay.style.display = 'block';
                         modalOuterContainer.style.display = 'block';
@@ -240,24 +224,19 @@
                             setClass(modalContainer, 'dkKbShown');
                         }, 20); // NOTE: 0 ought to be enough to put this back in the execution queue, but FF seems to have some issue with that? :/
                     }
-                },
-                hide : function () {
+                    // turn on the modal dialog
                     if (!window.transitionEnd) {
                         // IE8 + 9 Do transition by hand
-                        animateModal(false, {
+                        animateModal(true, {
                             topElems: [modalDialog],
                             opacityElems: [modalContainer] // modalOverlay, // NOTE: modalOverlay can't be in here, since it shall not go to opacity 1 :(
-                        }, function () {
-                            setClass(document.body, 'dkKbModalOpen', true);
-                            setClass(modalOverlay, 'dkKbShown', true);
-                            setClass(modalContainer, 'dkKbShown', true);
-                            window.setTimeout(function () {
-                                modalContainer.style.display = 'none';
-                                modalOuterContainer.style.display = 'none';
-                                modalOverlay.style.display = 'none';
-                            }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
-                        });
+                        }, addClasses);
                     } else {
+                        addClasses();
+                    }
+                },
+                hide : function () {
+                    function addClasses() {
                         setClass(document.body, 'dkKbModalOpen', true);
                         setClass(modalOverlay, 'dkKbShown', true);
                         setClass(modalContainer, 'dkKbShown', true);
@@ -266,6 +245,15 @@
                             modalOuterContainer.style.display = 'none';
                             modalOverlay.style.display = 'none';
                         }, MILISECONDSTOREMOVEELEMENTSAFTERHIDINGMODAL);
+                    }
+                    if (!window.transitionEnd) {
+                        // IE8 + 9 Do transition by hand
+                        animateModal(false, {
+                            topElems: [modalDialog],
+                            opacityElems: [modalContainer] // modalOverlay, // NOTE: modalOverlay can't be in here, since it shall not go to opacity 1 :(
+                        }, addClasses);
+                    } else {
+                        addClasses();
                     }
                 }
             };
