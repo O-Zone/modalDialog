@@ -161,6 +161,8 @@
                                 modalBody.removeChild(modalBody.lastChild);
                             }
                             modalBody.appendChild(body);
+                        } else { // somethings wrong with the body
+                            modalBody.innerHTML = '';
                         }
                     }
 
