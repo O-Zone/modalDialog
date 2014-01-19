@@ -54,7 +54,6 @@
 
     // crossbrowser addEventListener function (from http://stackoverflow.com/questions/10149963/adding-event-listener-cross-browser)
     function addEvent(elem, event, fn) {
-log('Adding event "' + event + '" on elem "' + elem.className + '"');
         // avoid memory overhead of new anonymous functions for every event handler that's installed
         // by using local functions
         function listenHandler(e) {
