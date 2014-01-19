@@ -191,7 +191,12 @@
             addEvent(closeButton, 'click', window.dkKbModal.hide);
             addEvent(modalOuterContainer, 'click', window.dkKbModal.hide);
             addEvent(modalDialog, 'click', function (e) {
-                e.stopPropagation();
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else {
+                    // IE8 do not support stopPropagation
+                    return false; // e.returnValue = false; ?
+                }
             });
             addEvent(turnOnModal, 'click', function () { window.dkKbModal.show('Testing...','This is da testing body!');});
 
